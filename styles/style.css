@@ -1,0 +1,226 @@
+.stApp {
+  /* Warna dasar putih (fallback) */
+  background-color: #ffffff;
+
+  /* Gradient Halus: 
+       Dari Putih Bersih (#ffffff) di atas 
+       ke Biru Keabuan Sangat Muda (#f0f4f8) di bawah.
+       Hasilnya terlihat bersih, modern, tapi tidak flat. 
+    */
+  background-image: linear-gradient(to bottom, #d5faf8 0%, #ffffff 50%, #dcffcb 100%);
+
+  /* Penting: Agar background tetap diam saat discroll (tidak berulang) */
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+header[data-testid="stHeader"] {
+  background-color: transparent !important;
+}
+
+/* Mengatur jarak konten agar tidak terlalu mepet atas/bawah */
+.block-container {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+/* Deteksi jika Streamlit pakai dark theme */
+[data-theme="dark"] .card-box {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+}
+
+/* --- 2. TYPOGRAPHY (TEKS) --- */
+/* Judul Besar di Halaman Home */
+.hero-text {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+/* Sub-judul di Halaman Home */
+.sub-hero {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+/* Styling Judul Utama */
+.hero-text {
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 10px;
+  color: var(--text-color); /* <-- INI KUNCINYA */
+}
+
+/* Styling Sub-Judul */
+.sub-hero {
+  font-size: 1.2rem;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--text-color); /* <-- INI KUNCINYA */
+  opacity: 0.8; /* Sedikit transparan agar tidak terlalu mencolok */
+}
+
+/* --- 3. KOMPONEN UI --- */
+
+/* Tombol (Button) - Membuatnya lebih modern */
+.stButton > button {
+  width: 100%;
+  border-radius: 8px;
+  font-weight: 600;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.stButton > button:hover {
+  transform: translateY(-2px); /* Efek angkat */
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+}
+
+.stFormSubmitButton > button {
+  width: 100%;
+  border-radius: 8px;
+  font-weight: 600;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.stFormSubmitButton > button:hover {
+  transform: translateY(-2px); /* Efek angkat */
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+}
+
+/* Kartu Info di Halaman Home (Card Box) */
+.card-box {
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* Bayangan lembut */
+  text-align: center;
+  margin-bottom: 20px;
+  border: 1px solid #eee;
+}
+
+/* Angka Besar (Metrik) */
+.metric-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #007bff; /* Biru utama */
+  margin: 10px 0;
+}
+
+.dashboard-card,
+.card-box {
+  background-color: #ffffff !important; /* Paksa putih bersih */
+  border: 1px solid #e0e0e0; /* Border tipis */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Bayangan halus */
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Kotak Pembungkus Grafik (Dashboard Card) */
+.dashboard-card {
+  /* background-color: white; */
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+  /* border: 1px solid #e0e0e0; */
+  margin-bottom: 15px;
+  height: 100%; /* Agar tinggi kartu kiri & kanan seimbang */
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-card {
+  /* Gunakan variabel ini agar background menyesuaikan tema */
+  background-color: var(--secondary-background-color);
+
+  /* Gunakan variabel ini agar tulisan menyesuaikan tema */
+  color: var(--text-color);
+
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  border: 1px solid rgba(128, 128, 128, 0.2); /* Border transparan agar aman di kedua tema */
+}
+
+.card-title {
+  /* Agar judul otomatis di tengah */
+  display: block;
+  width: 100%;
+  text-align: center;
+
+  /* Ukuran dan Tebal */
+  font-size: 1.3rem; /* Diperbesar sesuai permintaan */
+  font-weight: 600; /* Bold */
+
+  color: var(--text-color);
+}
+
+/* Penyesuaian Uploader agar terlihat rapi di tengah */
+.uploaded-box {
+  text-align: center;
+  padding: 20px;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  background-color: #fafafa;
+}
+
+/* =========================================
+   FEATURE CARDS (HOME PAGE)
+   ========================================= */
+.feature-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 30px 20px;
+  text-align: center;
+  border: 1px solid #f0f0f0;
+  /* Efek Bayangan Halus */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease-in-out;
+  height: 100%; /* Agar tinggi semua kartu sama */
+}
+
+/* Efek saat mouse diarahkan ke kartu (Naik sedikit) */
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-color: #b8e6ff; /* Sedikit biru saat hover */
+}
+
+.feature-icon {
+  font-size: 3.5rem; /* Ukuran ikon besar */
+  margin-bottom: 15px;
+  display: inline-block;
+  /* Membuat latar belakang bulat pudar di belakang ikon */
+  background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+  width: 90px;
+  height: 90px;
+  line-height: 90px;
+  border-radius: 50%;
+  color: #333;
+}
+
+.feature-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.feature-desc {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  line-height: 1.5;
+}
