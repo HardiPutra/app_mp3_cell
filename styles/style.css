@@ -1,15 +1,8 @@
+/* 1. BACKGROUND & LAYOUT (Light Mode Default) */
 .stApp {
-  /* Warna dasar putih (fallback) */
-  background-color: #ffffff;
-
-  /* Gradient Halus: 
-       Dari Putih Bersih (#ffffff) di atas 
-       ke Biru Keabuan Sangat Muda (#f0f4f8) di bawah.
-       Hasilnya terlihat bersih, modern, tapi tidak flat. 
-    */
+  /* Light Mode Background */
+  background-color: var(--background-color);
   background-image: linear-gradient(to bottom, #d5faf8 0%, #ffffff 50%, #dcffcb 100%);
-
-  /* Penting: Agar background tetap diam saat discroll (tidak berulang) */
   background-attachment: fixed;
   background-size: cover;
 }
@@ -18,209 +11,320 @@ header[data-testid="stHeader"] {
   background-color: transparent !important;
 }
 
-/* Mengatur jarak konten agar tidak terlalu mepet atas/bawah */
 .block-container {
   padding-top: 2rem;
   padding-bottom: 3rem;
 }
 
-/* Deteksi jika Streamlit pakai dark theme */
-[data-theme="dark"] .card-box {
-  background-color: #1e1e1e;
-  border: 1px solid #333;
-}
-
-/* --- 2. TYPOGRAPHY (TEKS) --- */
-/* Judul Besar di Halaman Home */
-.hero-text {
-  text-align: center;
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #2c3e50;
-  margin-bottom: 0.5rem;
-}
-
-/* Sub-judul di Halaman Home */
-.sub-hero {
-  text-align: center;
-  font-size: 1.1rem;
-  color: #555;
-  margin-bottom: 2.5rem;
-  line-height: 1.6;
-}
-
-/* Styling Judul Utama */
+/* 2. TYPOGRAPHY - Auto Dark/Light Mode */
 .hero-text {
   font-size: 3rem;
   font-weight: 800;
   text-align: center;
   margin-bottom: 10px;
-  color: var(--text-color); /* <-- INI KUNCINYA */
+  color: var(--text-color);
 }
 
-/* Styling Sub-Judul */
 .sub-hero {
   font-size: 1.2rem;
   font-weight: 400;
   text-align: center;
   margin-bottom: 30px;
-  color: var(--text-color); /* <-- INI KUNCINYA */
-  opacity: 0.8; /* Sedikit transparan agar tidak terlalu mencolok */
+  color: var(--text-color);
+  opacity: 0.85;
 }
 
-/* --- 3. KOMPONEN UI --- */
-
-/* Tombol (Button) - Membuatnya lebih modern */
-.stButton > button {
-  width: 100%;
-  border-radius: 8px;
-  font-weight: 600;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  transition: all 0.3s ease;
-}
-
-.stButton > button:hover {
-  transform: translateY(-2px); /* Efek angkat */
-  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
-}
-
+/* 3. BUTTONS - Hover Effect */
+.stButton > button,
 .stFormSubmitButton > button {
   width: 100%;
   border-radius: 8px;
   font-weight: 600;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding: 0.5rem;
   transition: all 0.3s ease;
 }
 
+.stButton > button:hover,
 .stFormSubmitButton > button:hover {
-  transform: translateY(-2px); /* Efek angkat */
+  transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
 }
 
-/* Kartu Info di Halaman Home (Card Box) */
-.card-box {
-  background-color: white;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* Bayangan lembut */
-  text-align: center;
-  margin-bottom: 20px;
-  border: 1px solid #eee;
-}
-
-/* Angka Besar (Metrik) */
-.metric-value {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #007bff; /* Biru utama */
-  margin: 10px 0;
-}
-
+/* 4. CARDS - Dashboard & Feature Cards (Light Mode) */
 .dashboard-card,
 .card-box {
-  background-color: #ffffff !important; /* Paksa putih bersih */
-  border: 1px solid #e0e0e0; /* Border tipis */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Bayangan halus */
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-/* Kotak Pembungkus Grafik (Dashboard Card) */
-.dashboard-card {
-  /* background-color: white; */
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
-  /* border: 1px solid #e0e0e0; */
-  margin-bottom: 15px;
-  height: 100%; /* Agar tinggi kartu kiri & kanan seimbang */
-  display: flex;
-  flex-direction: column;
-}
-
-.dashboard-card {
-  /* Gunakan variabel ini agar background menyesuaikan tema */
   background-color: var(--secondary-background-color);
-
-  /* Gunakan variabel ini agar tulisan menyesuaikan tema */
   color: var(--text-color);
-
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
   margin-bottom: 20px;
-  border: 1px solid rgba(128, 128, 128, 0.2); /* Border transparan agar aman di kedua tema */
+  border: 1px solid rgba(128, 128, 128, 0.2);
 }
 
 .card-title {
-  /* Agar judul otomatis di tengah */
   display: block;
   width: 100%;
   text-align: center;
-
-  /* Ukuran dan Tebal */
-  font-size: 1.3rem; /* Diperbesar sesuai permintaan */
-  font-weight: 600; /* Bold */
-
+  font-size: 1.3rem;
+  font-weight: 600;
   color: var(--text-color);
+  margin-bottom: 10px;
 }
 
-/* Penyesuaian Uploader agar terlihat rapi di tengah */
-.uploaded-box {
-  text-align: center;
-  padding: 20px;
-  border: 2px dashed #ccc;
-  border-radius: 10px;
-  background-color: #fafafa;
-}
-
-/* =========================================
-   FEATURE CARDS (HOME PAGE)
-   ========================================= */
+/* 5. FEATURE CARDS (Home Page - Light Mode) */
 .feature-card {
-  background-color: #ffffff;
+  background-color: var(--secondary-background-color);
   border-radius: 16px;
   padding: 30px 20px;
   text-align: center;
-  border: 1px solid #f0f0f0;
-  /* Efek Bayangan Halus */
+  border: 1px solid rgba(128, 128, 128, 0.15);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease-in-out;
-  height: 100%; /* Agar tinggi semua kartu sama */
+  height: 100%;
 }
 
-/* Efek saat mouse diarahkan ke kartu (Naik sedikit) */
 .feature-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  border-color: #b8e6ff; /* Sedikit biru saat hover */
+  border-color: rgba(59, 130, 246, 0.5);
 }
 
 .feature-icon {
-  font-size: 3.5rem; /* Ukuran ikon besar */
+  font-size: 3.5rem;
   margin-bottom: 15px;
   display: inline-block;
-  /* Membuat latar belakang bulat pudar di belakang ikon */
-  background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
   width: 90px;
   height: 90px;
   line-height: 90px;
   border-radius: 50%;
-  color: #333;
+  background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
 }
 
 .feature-title {
   font-weight: 700;
   font-size: 1.1rem;
   margin-bottom: 10px;
-  color: #2c3e50;
+  color: var(--text-color);
 }
 
 .feature-desc {
   font-size: 0.9rem;
-  color: #7f8c8d;
+  color: var(--text-color);
+  opacity: 0.75;
   line-height: 1.5;
+}
+
+/* 6. UTILITIES */
+.metric-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #3b82f6;
+  margin: 10px 0;
+}
+
+.uploaded-box {
+  text-align: center;
+  padding: 20px;
+  border: 2px dashed rgba(128, 128, 128, 0.3);
+  border-radius: 10px;
+  background-color: var(--secondary-background-color);
+}
+
+/* 7. SECTION HEADERS */
+.section-header {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+}
+
+/* Badge Kategori */
+.result-badge {
+  color: white;
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 10px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Content Column (Kolom Kanan) */
+.result-content-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 3; /* Porsi lebar 3 bagian (Lebih besar dari kolom ikon) */
+}
+
+/* Header Label (Hasil Analisis AI) */
+.result-header {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+/* Title (Nama Kategori Besar) */
+.result-title {
+  margin: 0;
+  padding: 0;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-color);
+  line-height: 1.2;
+}
+
+/* Recommendation Box (Nested Card) */
+.recommendation-box {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+[data-theme="dark"] .recommendation-box {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.recommendation-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.recommendation-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.recommendation-desc {
+  font-size: 0.95rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+/* PRODUCT SECTION - Header & Cards*/
+
+.product-section-header {
+  text-align: center;
+  margin: 30px 0 20px 0;
+}
+
+.product-section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 8px;
+}
+
+.product-section-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+/* Product Card */
+.product-card {
+  background-color: var(--secondary-background-color);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(128, 128, 128, 0.15);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  margin-bottom: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .product-card {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .product-card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Product Info Container */
+.product-info {
+  margin-top: 15px;
+  flex-grow: 1;
+}
+
+.product-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.product-price {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.product-desc {
+  font-size: 0.85rem;
+  color: var(--text-color);
+  opacity: 0.7;
+  min-height: 50px;
+  line-height: 1.5;
+}
+
+/* Empty State */
+.empty-recommendation {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+/* 8. DARK MODE OVERRIDES */
+@media (prefers-color-scheme: dark) {
+  /* Override Dashboard & Card Box */
+  .dashboard-card,
+  .card-box {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  /* Override Feature Card Hover */
+  .feature-card:hover {
+    border-color: rgba(96, 165, 250, 0.6) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* Override Feature Icon Gradient */
+  .feature-icon {
+    background: linear-gradient(135deg, #1e3a5f 0%, #0e1117 100%) !important;
+  }
+
+  /* Override Metric Value */
+  .metric-value {
+    color: #60a5fa !important;
+  }
+
+  /* Override Section Header */
+  .section-header {
+    border-bottom-color: rgba(96, 165, 250, 0.4) !important;
+  }
 }

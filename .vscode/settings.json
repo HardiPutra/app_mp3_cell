@@ -1,3 +1,10 @@
 {
-    "python.defaultInterpreterPath": "C:\\Users\\hardp\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+  "python.defaultInterpreterPath": "C:\\Users\\hardp\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "python-envs.pythonProjects": [
+    {
+      "path": "",
+      "envManager": "ms-python.python:system",
+      "packageManager": "ms-python.python:pip"
+    }
+  ]
 }

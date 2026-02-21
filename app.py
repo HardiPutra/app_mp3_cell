@@ -16,7 +16,6 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 from reportlab.lib import colors as rl_colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
-from reportlab.lib.enums import TA_CENTER, TA_LEFT
 from reportlab.lib.utils import ImageReader
 
 # ==============================================================================
@@ -97,7 +96,8 @@ def load_recommendations():
                 'nama': r['name'],
                 'harga': r['price'],
                 'desc': r['desc'],
-                'img': str(RECO_IMG_DIR / r['img']) if r.get('img') else ''
+                'img': str(RECO_IMG_DIR / r['img']) if r.get('img') else '',
+                'link': r.get('link', '')
             })
     return rec
 
@@ -105,7 +105,7 @@ def save_recommendations_from_list(rows):
     """rows: list of dicts with keys category,name,price,desc,img (img = filename)"""
     RECO_CSV.parent.mkdir(parents=True, exist_ok=True)
     with open(RECO_CSV, 'w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=['category','name','price','desc','img'])
+        writer = csv.DictWriter(f, fieldnames=['category','name','price','desc','img','link'])
         writer.writeheader()
         for r in rows:
             writer.writerow({
@@ -113,7 +113,8 @@ def save_recommendations_from_list(rows):
                 'name': r.get('name',''),
                 'price': r.get('price',''),
                 'desc': r.get('desc',''),
-                'img': r.get('img','')
+                'img': r.get('img',''),
+                'link': r.get('link','') 
             })
 
 def save_uploaded_image(uploaded_file):
@@ -734,89 +735,242 @@ def show_prediksi_public():
             input_df = pd.DataFrame([[usia, pekerjaan, performa, kamera, storage, baterai, ergonomi]], 
                                     columns=["Usia", "Pekerjaan", "Performa", "Kamera", "Storage", "Baterai", "Ergonomi"])
             try:
-                # PREDIKSI
+                # ═══════════════════════════════════════════════════════════
+                # PREDIKSI MODEL
+                # ═══════════════════════════════════════════════════════════
                 pred_val = model.predict(input_df)[0]
                 pred_label = get_label_name(pred_val)
                 
-                # SETUP HASIL (Gambar & Teks)
-                if pred_val == 2: # Gaming
+                # Setup variabel berdasarkan kategori
+                if pred_val == 2:  # Gaming
                     img_url = "https://cdn-icons-png.flaticon.com/512/808/808439.png"
                     caption_text = "Gaming / High-Performance"
-                    alert_type = "success"
-                    rek_title = "Rekomendasi: Seri **Gaming / Flagship**"
-                    rek_desc = "Anda membutuhkan HP dengan **Chipset Kencang**, Layar Responsif (High Refresh Rate), dan Sistem Pendingin yang baik."
-                elif pred_val == 1: # Produktivitas
+                    badge_color = "#10B981"
+                    border_color = f"{badge_color}40"
+                    rek_title = "Gaming / Flagship"
+                    rek_desc = "Anda membutuhkan HP dengan <b>Chipset Kencang</b> (Snapdragon 8 Gen / Dimensity 9000+), Layar Responsif (120Hz+), RAM besar (12GB+), dan Sistem Pendingin yang baik untuk gaming marathon."
+                    
+                elif pred_val == 1:  # Produktivitas
                     img_url = "https://cdn-icons-png.flaticon.com/512/3062/3062634.png"
                     caption_text = "Produktivitas / Professional"
-                    alert_type = "info"
-                    rek_title = "Rekomendasi: Seri **Mid-Range / All Rounder**"
-                    rek_desc = "Anda membutuhkan HP seimbang (*All-Rounder*). Kamera jernih, Multitasking lancar (RAM 8GB+), dan Penyimpanan luas."
-                else: # Ekonomis
+                    badge_color = "#3B82F6"
+                    border_color = f"{badge_color}40"
+                    rek_title = "Mid-Range / All Rounder"
+                    rek_desc = "Anda membutuhkan HP yang <b>seimbang</b> (All-Rounder). Kamera jernih (48MP+), Multitasking lancar (RAM 8GB+), Penyimpanan luas (128GB+), dan Baterai tahan seharian."
+                    
+                else:  # Ekonomis
                     img_url = "https://cdn-icons-png.flaticon.com/512/2503/2503504.png"
                     caption_text = "Ekonomis / Daily Driver"
-                    alert_type = "warning"
-                    rek_title = "Rekomendasi: Seri **Entry Level / Basic**"
-                    rek_desc = "Anda membutuhkan HP yang **Efisien & Terjangkau**. Cukup untuk komunikasi (WhatsApp), Media Sosial ringan, dan browsing."
+                    badge_color = "#F59E0B"
+                    border_color = f"{badge_color}40"
+                    rek_title = "Entry Level / Basic"
+                    rek_desc = "Anda membutuhkan HP yang <b>Efisien & Terjangkau</b>. Cukup untuk komunikasi (WhatsApp, Telepon), Media Sosial ringan (Instagram, TikTok), dan browsing internet."
 
-
-                # TAMPILAN HASIL (Layout Kartu Hasil)
                 st.markdown("<br>", unsafe_allow_html=True)
 
-                c_res_img, c_res_txt = st.columns([1, 3])
-                
-                with c_res_img:
-                    st.image(img_url, width=120)
-                    st.markdown(f"<div style='text-align:center; font-weight:bold; color:#555;'>{caption_text}</div>", unsafe_allow_html=True)
-
-                with c_res_txt:
-                    st.markdown(f"<h2 style='margin:0; color:#333;'>Hasil Analisis: <span style='color:#007bff'>{pred_label}</span></h2>", unsafe_allow_html=True)
-                    st.markdown(f"<p style='font-size:1.1rem; margin-top:10px;'>{rek_desc}</p>", unsafe_allow_html=True)
+                with st.container():
+                    st.markdown(
+                        f"""
+                        <style>
+                        .result-container {{
+                            border: 2px solid {border_color};
+                            border-radius: 16px;
+                            padding: 30px;
+                            margin: 20px 0;
+                            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                            background-color: var(--secondary-background-color);
+                        }}
+                        [data-theme="dark"] .result-container {{
+                            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+                        }}
+                        </style>
+                        """,
+                        unsafe_allow_html=True
+                    )
                     
-                    if alert_type == "success": st.success(rek_title)
-                    elif alert_type == "info": st.info(rek_title)
-                    else: st.warning(rek_title)
+                    # Buat columns
+                    col_icon, col_content = st.columns([1.2, 2.8])
 
-                st.markdown("</div>", unsafe_allow_html=True)
+                    # ━━━ KOLOM ICON (DIPERBAIKI: CENTER ALIGNMENT) ━━━
+                    with col_icon:
+                        # Container untuk centering
+                        st.markdown(
+                            '<div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">',
+                            unsafe_allow_html=True
+                        )
+                        
+                        # Image dengan centering
+                        st.markdown(
+                            f'<div style="text-align: center; margin-bottom: 10px;"><img src="{img_url}" width="110" style="display: block; margin: 0 auto;"></div>',
+                            unsafe_allow_html=True
+                        )
+                        
+                        # Badge
+                        st.markdown(
+                            f'''
+                            <div style="
+                                background-color: {badge_color};
+                                color: white;
+                                text-align: center;
+                                padding: 8px 12px;
+                                border-radius: 20px;
+                                font-size: 0.75rem;
+                                font-weight: 600;
+                                letter-spacing: 0.5px;
+                                text-transform: uppercase;
+                                margin: 0 auto;
+                                max-width: 230px;
+                            ">
+                                {caption_text.upper()}
+                            </div>
+                            ''',
+                            unsafe_allow_html=True
+                        )
+                        
+                        st.markdown('</div>', unsafe_allow_html=True)
+
+                    # ━━━ KOLOM KONTEN ━━━
+                    with col_content:
+                        st.markdown(
+                            f'''
+                            <div style="color: {badge_color}; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">
+                                📊 Hasil Analisis AI
+                            </div>
+                            ''',
+                            unsafe_allow_html=True
+                        )
+                        
+                        st.markdown(
+                            f'''
+                            <h2 style="
+                                margin: 0 0 15px 0;
+                                padding: 0;
+                                font-size: 2.2rem;
+                                font-weight: 800;
+                                color: var(--text-color);
+                                line-height: 1.2;
+                            ">
+                                {pred_label}
+                            </h2>
+                            ''',
+                            unsafe_allow_html=True
+                        )
+                        
+                        st.markdown(
+                            f'''
+                            <div style="
+                                background-color: rgba(255, 255, 255, 0.7);
+                                border-left: 4px solid {badge_color};
+                                padding: 15px 20px;
+                                border-radius: 8px;
+                                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+                            ">
+                                <div style="
+                                    font-size: 0.85rem;
+                                    color: {badge_color};
+                                    font-weight: 600;
+                                    margin-bottom: 8px;
+                                ">
+                                    💡 REKOMENDASI SERI
+                                </div>
+                                <div style="
+                                    font-size: 1.1rem;
+                                    font-weight: 700;
+                                    color: var(--text-color);
+                                    margin-bottom: 10px;
+                                ">
+                                    {rek_title}
+                                </div>
+                                <div style="
+                                    font-size: 0.95rem;
+                                    color: var(--text-color);
+                                    opacity: 0.85;
+                                    line-height: 1.6;
+                                ">
+                                    {rek_desc}
+                                </div>
+                            </div>
+                            ''',
+                            unsafe_allow_html=True
+                        )
                 
-                # --- FITUR REKOMENDASI HP ---
+                # ═══════════════════════════════════════════════════════════
+                # SECTION: REKOMENDASI PRODUK
+                # ═══════════════════════════════════════════════════════════
+                
                 st.markdown("<br>", unsafe_allow_html=True)
-                st.markdown("### 📱 Rekomendasi Smartphone Tersedia:")
                 
+                # Header Section
+                st.markdown('''
+                    <div class="product-section-header">
+                        <h3 class="product-section-title">
+                            📱 Rekomendasi Smartphone Tersedia
+                        </h3>
+                        <p class="product-section-subtitle">
+                            Produk pilihan sesuai kebutuhan Anda di MP3 Cellular Solok
+                        </p>
+                    </div>
+                ''', unsafe_allow_html=True)
+                
+                # Load Rekomendasi
                 rec_list = get_phone_recommendations(pred_label)
                 
-                cols = st.columns(3)
-
-                for i, hp in enumerate(rec_list):
-                    with cols[i % 3]:
-
-                        # CARD CONTAINER OPEN
-                        st.markdown("<br>", unsafe_allow_html=True)
-
-                        # ===== GAMBAR (Python, BUKAN HTML) =====
-                        img_path = hp.get('img', '')
-
-                        if img_path and os.path.exists(img_path):
-                            st.image(img_path, width=120)
-                        elif img_path and img_path.startswith("http"):
-                            st.image(img_path, width=120)
-                        else:
-                            st.image("assets/default_phone.png", width=120)
-
-                        # ===== TEKS =====
-                        st.markdown(f"""
-                            <div style="font-weight:bold; font-size:1rem; margin-bottom:5px;">
-                                {hp.get('nama','-')}
-                            </div>
-                            <div style="color:#28a745; font-weight:bold; margin-bottom:5px;">
-                                {hp.get('harga','-')}
-                            </div>
-                            <div style="font-size:0.8rem; color:#666; min-height:40px;">
-                                {hp.get('desc','')}
-                            </div>
-                        """, unsafe_allow_html=True)
-
-                        # CARD CONTAINER CLOSE
-                        st.markdown("</div>", unsafe_allow_html=True)
+                if len(rec_list) == 0:
+                    st.markdown('''
+                        <div class="empty-recommendation">
+                            <p style="font-size: 1.1rem; margin: 0;">💬</p>
+                            <p style="margin: 10px 0 0 0;">
+                                Belum ada rekomendasi produk untuk kategori ini.<br>
+                                Silakan hubungi staff toko untuk konsultasi lebih lanjut.
+                            </p>
+                        </div>
+                    ''', unsafe_allow_html=True)
+                else:
+                    cols = st.columns(min(len(rec_list), 4))
+                    
+                    for i, hp in enumerate(rec_list):
+                        with cols[i % 4]:
+                            # Card Wrapper
+                            # Gambar
+                            img_path = hp.get('img', '')
+                            if img_path and os.path.exists(img_path):
+                                st.image(img_path, width=140)
+                            elif img_path and img_path.startswith("http"):
+                                st.image(img_path, width=140)
+                            else:
+                                default_img = BASE_DIR / "assets" / "default_phone.png"
+                                if default_img.exists():
+                                    st.image(str(default_img), width=140)
+                                else:
+                                    st.image("https://cdn-icons-png.flaticon.com/512/107/107815.png", width=140)
+                            
+                            # Info Produk (hanya price color yang dynamic)
+                            st.markdown(
+                                f'''
+                                <div class="product-info">
+                                    <div class="product-name">{hp.get('nama', '-')}</div>
+                                    <div class="product-price" style="color: {badge_color};">
+                                        {hp.get('harga', '-')}
+                                    </div>
+                                    <div class="product-desc">{hp.get('desc', '')}</div>
+                                </div>
+                                ''',
+                                unsafe_allow_html=True
+                            )
+                            
+                            # Tombol Detail
+                            link_url = hp.get('link', '')
+                            if link_url and link_url.strip():
+                                st.link_button(
+                                    "🔗 Lihat Detail",
+                                    link_url,
+                                    use_container_width=True,
+                                    type="primary"
+                                )
+                            else:
+                                st.caption("💬 Tanyakan ke staff untuk info lebih lanjut")
+                            
+                            st.markdown("<br>", unsafe_allow_html=True)
 
                 # Simpan ke Histori
                 history_entry = {
@@ -860,12 +1014,11 @@ def show_login():
 
 # --- D. DASHBOARD ADMIN ---
 def show_manage_data():
-    st.header("🛠️ Manajemen Data HP (Admin)")
-    st.markdown("Tambah / Edit / Hapus daftar HP per kategori. Gambar disimpan di `assets/reco_images/`.")
+    st.header("🛠️ Manajemen Data Smartphone")
+    st.markdown("Admin dapat menambah, mengedit, atau menghapus rekomendasi produk yang ditampilkan kepada pelanggan.")
 
     # Load current data
     rec = load_recommendations()
-    # Flatten to rows for editor
     rows = []
     for cat, items in rec.items():
         for it in items:
@@ -874,85 +1027,176 @@ def show_manage_data():
                 'name': it.get('nama',''),
                 'price': it.get('harga',''),
                 'desc': it.get('desc',''),
-                'img': Path(it.get('img','')).name if it.get('img') else ''
+                'img': Path(it.get('img','')).name if it.get('img') else '',
+                'link': it.get('link','')
             })
 
-    import pandas as pd
-    if len(rows) == 0:
-        df = pd.DataFrame(columns=['category','name','price','desc','img'])
-    else:
-        df = pd.DataFrame(rows)
+    df = pd.DataFrame(rows) if rows else pd.DataFrame(columns=['category','name','price','desc','img','link'])
 
-    st.markdown("### Editor (ubah langsung lalu klik 'Simpan Perubahan'):")
+    if "Hapus?" not in df.columns:
+        df.insert(0, "Hapus?", False)
+
     edited = st.data_editor(
         df,
-        num_rows="dynamic",
+        column_config={
+            "Hapus?": st.column_config.CheckboxColumn(
+                "Hapus?",
+                help="Centang untuk menghapus produk ini",
+                default=False
+            )
+        },
         use_container_width=True,
         hide_index=True,
         key="editor_reco"
     )
 
-    st.markdown("---")
-    c_left, c_right = st.columns([2,1])
+    # =====================================================
+    # TOMBOL DI BAWAH TABEL (TENGAH, UKURAN SEDANG)
+    # =====================================================
+    st.markdown("<br>", unsafe_allow_html=True)
 
-    with c_left:
-        st.markdown("### Tambah Rekomendasi Baru")
-        new_cat = st.selectbox("Kategori", ["Ekonomis","Produktivitas","Gaming"], key="new_cat")
+    c_sp1, c_btns, c_sp2 = st.columns([2, 4, 2])
+
+    with c_btns:
+        col_del, col_save = st.columns(2)
+
+        # Hapus Produk
+        with col_del:
+            if st.button("🗑️ Hapus Produk Terpilih", use_container_width=False):
+                df_baru = edited[edited["Hapus?"] == False]
+                df_baru = df_baru.drop(columns=["Hapus?"])
+
+                cleaned = []
+                for _, r in df_baru.iterrows():
+                    cleaned.append({
+                        'category': r['category'],
+                        'name': r['name'],
+                        'price': r['price'],
+                        'desc': r['desc'],
+                        'img': r['img'],
+                        'link': r.get('link', '')
+                    })
+
+                save_recommendations_from_list(cleaned)
+                st.success("Produk berhasil dihapus.")
+                st.rerun()
+
+        # Simpan Perubahan
+        with col_save:
+            if st.button("💾 Simpan Perubahan Editor", use_container_width=False):
+                cleaned = []
+                edf = edited.fillna('')
+                for _, r in edf.iterrows():
+                    cleaned.append({
+                        'category': r['category'],
+                        'name': r['name'],
+                        'price': r['price'],
+                        'desc': r['desc'],
+                        'img': r['img'],
+                        'link': r.get('link', '')
+                    })
+
+                save_recommendations_from_list(cleaned)
+                st.success("Perubahan disimpan.")
+                st.rerun()
+
+    st.markdown("---")
+
+    # =====================================================
+    # FORM TAMBAH REKOMENDASI (2 KOLOM)
+    # =====================================================
+    st.markdown("### ➕ Tambah Rekomendasi Baru")
+
+    col_left, col_right = st.columns(2)
+
+    # =====================================================
+    # KOLOM KIRI
+    # =====================================================
+    with col_left:
+        new_cat = st.selectbox(
+            "Kategori", 
+            ["Ekonomis","Produktivitas","Gaming"], 
+            key="new_cat"
+        )
         new_name = st.text_input("Nama HP", key="new_name")
         new_price = st.text_input("Harga", key="new_price")
         new_desc = st.text_area("Deskripsi", key="new_desc")
-        uploaded = st.file_uploader("Upload Gambar (jpg/png)", type=['png','jpg','jpeg'], key="reco_upload")
 
-        if st.button("➕ Tambah"):
-            img_fname = ""
-            if uploaded:
-                img_fname = save_uploaded_image(uploaded)
-            rows.append({
-                'category': new_cat,
-                'name': new_name,
-                'price': new_price,
-                'desc': new_desc,
-                'img': img_fname
-            })
-            save_recommendations_from_list(rows)
-            st.rerun()
+    # =====================================================
+    # KOLOM KANAN
+    # =====================================================
+    with col_right:
+        new_link = st.text_input(
+            "Link Detail (Opsional)", 
+            key="new_link",
+            placeholder="https://...",
+            help="Link ke halaman produk"
+        )
 
-    with c_right:
-        if st.button("💾 Simpan Perubahan Editor"):
-            # validate and save edited dataframe
-            cleaned = []
-            import pandas as pd
-            edf = edited.fillna('')
-            for _, r in edf.iterrows():
-                cleaned.append({
-                    'category': r['category'],
-                    'name': r['name'],
-                    'price': r['price'],
-                    'desc': r['desc'],
-                    'img': r['img']
+        uploaded = st.file_uploader(
+            "Upload Gambar (jpg/png)", 
+            type=['png','jpg','jpeg'], 
+            key="reco_upload"
+        )
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        # ⬇ Buat kolom kecil untuk center tombol
+        c_sp_left, c_btn, c_sp_right = st.columns([1, 1, 1])
+
+        with c_btn:
+            if st.button("➕ Tambah Produk", use_container_width=False):
+                img_fname = ""
+                if uploaded:
+                    img_fname = save_uploaded_image(uploaded)
+
+                rows.append({
+                    'category': new_cat,
+                    'name': new_name,
+                    'price': new_price,
+                    'desc': new_desc,
+                    'img': img_fname,
+                    'link': new_link
                 })
-            save_recommendations_from_list(cleaned)
-            st.success("Perubahan disimpan.")
-            st.rerun()
 
-    st.markdown("### Preview saat ini")
+                save_recommendations_from_list(rows)
+                st.success("Produk berhasil ditambahkan.")
+                st.rerun()
+
+    st.markdown("---")
+
+    st.markdown("### Preview Produk")
     rec_after = load_recommendations()
     # show thumbnails
     for cat in ["Ekonomis","Produktivitas","Gaming"]:
         st.markdown(f"**{cat}**")
         items = rec_after.get(cat, [])
-        cols = st.columns(3)
+        cols = st.columns(4)
         for i, it in enumerate(items):
-            c = cols[i % 3]
+            c = cols[i % 4]
             with c:
                 img_path = it.get('img') or ""
                 if img_path and Path(img_path).exists():
                     st.image(img_path, width=140)
                 else:
-                    st.image("assets/default_phone.png", width=140)
+                    default_img = BASE_DIR / "assets" / "default_phone.png"
+                            
+                    if default_img.exists():
+                        st.image(str(default_img), width=140)
+                    else:
+                        st.image("https://cdn-icons-png.flaticon.com/512/107/107815.png", width=140)
                 st.markdown(f"**{it.get('nama','-')}**")
                 st.markdown(f"{it.get('harga','-')}")
                 st.markdown(f"<div style='font-size:0.8rem; color:#666'>{it.get('desc','')}</div>", unsafe_allow_html=True)
+                link_url = it.get('link', '')
+                if link_url and link_url.strip():
+                    st.link_button(
+                        "🔗 Detail",
+                        link_url,
+                        use_container_width=True
+                    )
+                else:
+                        st.caption("(Belum ada link)")
                 st.markdown("<br>", unsafe_allow_html=True)
 
 def show_admin_dashboard():
@@ -1083,7 +1327,7 @@ def show_admin_dashboard():
         # =========================================================
         # BAGIAN 2: UPLOAD DATA BARU (Lebar Diperkecil)
         # =========================================================
-        st.subheader("2. Uji Validasi Data Baru")
+        st.subheader("2. Uji Validasi Data")
 
         c_space1, c_upload, c_space2 = st.columns([1, 2, 1])
         
@@ -1247,77 +1491,105 @@ def show_admin_dashboard():
                 # =========================================================
                 row2_col1, row2_col2 = st.columns(2)
 
-                # --- [B] DETAIL PERBANDINGAN FITUR (Kiri) ---
+               # --- [B] ANALISIS FITUR (Feature Importance & Correlation) ---
                 with row2_col1:
-                    st.markdown('<div class="dashboard-card"><div class="card-title">Detail Perbandingan Fitur</div>', unsafe_allow_html=True)
-                    
-                    # 1. Pilihan Fitur
-                    default_ix = required_cols.index("Performa") if "Performa" in required_cols else 0
-                    feat_compare = st.selectbox("🔍 Pilih Fitur:", required_cols, index=default_ix, key="sel_compare_feat")
-                    
-                    # 2. Siapkan Data
-                    if feat_compare == "Usia":
-                        val_map = {0: "Remaja", 1: "Dewasa", 2: "Lansia"}
-                    elif feat_compare == "Pekerjaan":
-                        val_map = {0: "Pelajar", 1: "Pekerja", 2: "Tdk Bekerja"}
-                    else:
-                        val_map = {0: "Rendah", 1: "Sedang", 2: "Tinggi"}
-                    
-                    df_viz = df_upload.copy()
-                    target_col = 'Label_Asli' if 'Label_Asli' in df_viz.columns else 'Label_Prediksi'
-                    df_viz[feat_compare] = df_viz[feat_compare].map(val_map)
-                    
-                    # Hitung Persentase
-                    cross_tab = pd.crosstab(df_viz[target_col], df_viz[feat_compare], normalize='index') * 100
-                    valid_order = [t for t in target_order if t in cross_tab.index]
-                    cross_tab = cross_tab.reindex(valid_order)
-                    
-                    # 3. Visualisasi Stacked Bar Chart
-                    st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-                    # Tinggi sedikit disesuaikan agar sejajar dengan tabel
-                    fig_comp, ax_comp = plt.subplots(figsize=(6, 3.2)) 
-                    
-                    cross_tab.plot(kind='barh', stacked=True, colormap='viridis', ax=ax_comp, width=0.7)
-                    
-                    ax_comp.set_xlabel("Persentase (%)", fontsize=8)
-                    ax_comp.set_ylabel("")
-                    ax_comp.set_xlim(0, 100)
-                    ax_comp.legend(title="", bbox_to_anchor=(0.5, 1.15), loc='upper center', ncol=3, fontsize=8, frameon=False)
-                    ax_comp.tick_params(labelsize=8)
-                    
-                    for c in ax_comp.containers:
-                        ax_comp.bar_label(c, fmt='%.0f%%', label_type='center', fontsize=8, color='white', weight='bold')
+                    st.markdown('<div class="dashboard-card"><div class="card-title">Analisis Fitur</div>', unsafe_allow_html=True)
 
-                    ax_comp.spines['top'].set_visible(False)
-                    ax_comp.spines['right'].set_visible(False)
-                    
-                    st.pyplot(fig_comp, use_container_width=True)
+                    # Tab kecil
+                    tab1, tab2 = st.tabs(["📊 Feature Importance", "🔗 Correlation"])
 
-                    # 4. KETERANGAN OTOMATIS (Versi Minimalis)
-                    try:
-                        keterangan_parts = []
-                        for kategori in target_order:
-                            if kategori in cross_tab.index:
-                                pilihan_favorit = cross_tab.loc[kategori].idxmax()
-                                persen_favorit = cross_tab.loc[kategori].max()
-                                keterangan_parts.append(f"<b>{kategori}</b>: {persen_favorit:.0f}% pilih {pilihan_favorit}")
-                        
-                        if keterangan_parts:
-                            # Gabungkan dengan pemisah " • " agar satu baris (hemat tempat)
-                            pesan_gabung = " &bull; ".join(keterangan_parts)
-                            
+                    # =========================================================
+                    # TAB 1: FEATURE IMPORTANCE
+                    # =========================================================
+                    with tab1:
+                        try:
+                            if 'Prediksi_Sistem' in df_upload.columns:
+
+                                features = required_cols
+
+                                importance_df = calculate_feature_importance(
+                                    df_upload,
+                                    features=features,
+                                    target_col='Prediksi_Sistem'
+                                )
+
+                                fig_imp, ax_imp = plt.subplots(figsize=(6, 3.2))
+
+                                bars = ax_imp.barh(
+                                    importance_df['Fitur'],
+                                    importance_df['Importance_Pct']
+                                )
+
+                                ax_imp.set_xlabel("Tingkat Kepentingan (%)", fontsize=8)
+                                ax_imp.set_xlim(0, 100)
+                                ax_imp.invert_yaxis()
+                                ax_imp.tick_params(labelsize=8)
+
+                                # Label persen
+                                for bar in bars:
+                                    width = bar.get_width()
+                                    ax_imp.text(
+                                        width + 1,
+                                        bar.get_y() + bar.get_height()/2,
+                                        f"{width:.1f}%",
+                                        va='center',
+                                        fontsize=8
+                                    )
+
+                                ax_imp.spines['top'].set_visible(False)
+                                ax_imp.spines['right'].set_visible(False)
+
+                                st.pyplot(fig_imp, use_container_width=True)
+
+                                # Insight singkat
+                                top_feature = importance_df.iloc[0]
+                                st.markdown(
+                                    f"<div style='font-size:0.8rem; margin-top:5px;'>"
+                                    f"💡 Fitur paling berpengaruh: <b>{top_feature['Fitur']}</b> "
+                                    f"({top_feature['Importance_Pct']:.1f}%)"
+                                    f"</div>",
+                                    unsafe_allow_html=True
+                                )
+
+                            else:
+                                st.info("Prediksi belum tersedia.")
+
+                        except Exception as e:
+                            st.error(f"Gagal menghitung feature importance: {e}")
+
+                    # =========================================================
+                    # TAB 2: CORRELATION MATRIX
+                    # =========================================================
+                    with tab2:
+                        try:
+                            corr_matrix = df_upload[required_cols].corr()
+
+                            fig_corr, ax_corr = plt.subplots(figsize=(6, 3.2))
+                            sns.heatmap(
+                                corr_matrix,
+                                annot=True,
+                                fmt=".3f",
+                                cmap="coolwarm",
+                                center=0,
+                                ax=ax_corr,
+                                annot_kws={"size": 7}
+                            )
+
+                            ax_corr.tick_params(labelsize=7)
+
+                            st.pyplot(fig_corr, use_container_width=True)
+
                             st.markdown(
-                                f"<div style='margin-top: 5px; font-size: 0.8rem; color: var(--text-color)'>💡 {pesan_gabung}</div>", 
+                                "<div style='font-size:0.8rem; margin-top:5px;'>"
+                                "💡 Korelasi mendekati 1 atau -1 menunjukkan hubungan kuat antar fitur."
+                                "</div>",
                                 unsafe_allow_html=True
                             )
-                        else:
-                            st.caption("Data belum cukup.")
 
-                    except Exception as e:
-                        st.caption("")
-                    
+                        except Exception as e:
+                            st.error(f"Gagal menghitung correlation: {e}")
+
                     st.markdown('</div>', unsafe_allow_html=True)
-
 
                 # --- [C] DETAIL DATA TABEL (Kanan) ---
                 with row2_col2:
@@ -1358,14 +1630,11 @@ def show_admin_dashboard():
                         """, 
                         unsafe_allow_html=True
                     )
-
     # --- MENU 2: DATA HISTORI ---
     elif admin_menu == "Data Histori":
         st.title("💾 Data Histori Transaksi")
-        st.write("Kelola data riwayat prediksi pelanggan di sini.")
+        st.write("Kelola data riwayat prediksi pelanggan")
 
-        # --- [PERBAIKAN 1] INISIALISASI SESSION STATE DI PALING ATAS (WAJIB) ---
-        # Letakkan ini di luar blok try/if file exists agar selalu aman
         if "pdf_bytes" not in st.session_state:
             st.session_state["pdf_bytes"] = None
         if "pdf_data_len" not in st.session_state:
@@ -1381,13 +1650,11 @@ def show_admin_dashboard():
                     df_hist.insert(0, "Pilih Hapus", False)
                 
                 # 3. Tampilkan Data Editor
-                st.info("Centang kotak pada baris yang ingin dihapus, lalu klik tombol merah di bawah.")
-                
                 edited_df = st.data_editor(
                     df_hist,
                     column_config={
                         "Pilih Hapus": st.column_config.CheckboxColumn(
-                            "Hapus?",
+                            "Hapus",
                             help="Centang untuk menghapus data ini",
                             default=False,
                         )
@@ -1425,11 +1692,34 @@ def show_admin_dashboard():
                     
                     # A. DOWNLOAD CSV
                     with c_csv:
-                        csv_data = df_hist.drop(columns=["Pilih Hapus"]).to_csv(index=False).encode('utf-8')
+                        # 1. Buat salinan (copy) dari dataframe histori agar tabel di layar tidak ikut berubah
+                        df_ml = df_hist.copy()
+                        
+                        # 2. Hapus kolom yang tidak diperlukan ('Pilih Hapus' dan 'Tanggal')
+                        kolom_dihapus = ["Pilih Hapus", "Tanggal"]
+                        df_ml = df_ml.drop(columns=[k for k in kolom_dihapus if k in df_ml.columns])
+                        
+                        # 3. Ubah nama kolom 'Hasil_Prediksi' menjadi 'Label'
+                        if "Hasil_Prediksi" in df_ml.columns:
+                            df_ml = df_ml.rename(columns={"Hasil_Prediksi": "Label"})
+                        
+                        # 4. Ubah nilai teks kategori menjadi angka numerik (0, 1, 2)
+                        # Sesuai urutan target: Ekonomis=0, Produktivitas=1, Gaming=2
+                        mapping_label = {"Ekonomis": 0, "Produktivitas": 1, "Gaming": 2}
+                        if "Label" in df_ml.columns:
+                            df_ml["Label"] = df_ml["Label"].map(mapping_label)
+                            
+                        # Opsional: Pastikan data berupa integer/angka bulat jika ada NaN (kosong)
+                        df_ml = df_ml.fillna(0).astype(int)
+                        
+                        # 5. Konversi dataframe yang sudah diformat ke CSV (tanpa index)
+                        csv_data = df_ml.to_csv(index=False).encode('utf-8')
+                        
+                        # 6. Tombol Download
                         st.download_button(
-                            label="📥 Unduh CSV (Raw)",
+                            label="📥 Unduh CSV",
                             data=csv_data,
-                            file_name="histori_transaksi.csv",
+                            file_name="data_histori_uji.csv",
                             mime="text/csv",
                             use_container_width=True,
                             key="btn_dl_csv"
@@ -1440,13 +1730,12 @@ def show_admin_dashboard():
                         current_len = len(df_hist)
 
                         # Tombol eksplisit untuk membuat laporan PDF
-                        if st.button("🔄 Buat / Perbarui Laporan PDF", key="btn_generate_pdf", use_container_width=True):
+                        if st.button("🔄 Laporan PDF", key="btn_generate_pdf", use_container_width=True):
                             try:
                                 # Generate PDF hanya saat tombol ditekan
                                 buffer = create_pdf_report(df_hist.drop(columns=["Pilih Hapus"]))
                                 st.session_state["pdf_bytes"] = buffer.getvalue()  # simpan sebagai bytes
                                 st.session_state["pdf_data_len"] = current_len
-                                # st.success("✅ Laporan PDF berhasil dibuat. Silakan unduh di bawah.")
                             except Exception as e:
                                 st.error(f"Gagal membuat PDF: {e}")
                                 st.session_state["pdf_bytes"] = None
@@ -1473,7 +1762,7 @@ def show_admin_dashboard():
                 st.error(f"Terjadi kesalahan: {e}")
         else:
             st.info("Belum ada data histori tersimpan.")
-    # --- MENU 3: SIMULASI PREDIKSI ---
+    # --- MENU 3: MANAJEMEN DATA ---
     elif admin_menu == "Manajemen Data":
         show_manage_data()
 
@@ -1483,8 +1772,6 @@ def show_admin_dashboard():
 
 # 1. Cek dulu status login
 if st.session_state.logged_in:
-    # Jika sudah login, paksa masuk ke Dashboard (kecuali user memang mau logout)
-    # Ini mencegah user terlempar ke 'home' saat refresh
     if st.session_state.page == 'login': 
         st.session_state.page = 'admin_dashboard'
 

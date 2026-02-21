@@ -1,10 +1,13 @@
-category,name,price,desc,img
-Ekonomis,Infinix hot 9 play,10000000,memiiki peoforma ocock untuk ekonomis,infinix_hot_9_play.png
-Ekonomis,infinix hot 9 play,1000000,cocock untuk penggunaan sehari hari,infinix_hot_9_play.png
-Produktivitas,Oppo A98 ,3.300.000,"Ram 8GB, Memori 256 GB",oppo_A98.png
-Produktivitas,Redmi  12 T,4.700.000,Ram 8 Memori 256,redmi_12_T.png
-Produktivitas,Samsung A53,2.900.000,Ram 8 Memori 128,samsung_A53.png
-Gaming,Xiaomi 15 T,8.000.000,Ram 12 Memori 512,Xiaomi_15_T.png
-Gaming,Xiaomi 15 T,8.000.000,Ram 12 Memori 512,Xiaomi_15_T.png
-Gaming,Samsung S24 Ultra,21.000.000,Ram 12 GB Memori 512 GB,Samsung_S24_Ultra.png
-Ekonomis,Redmi A5,1.400.000,Ram 4 GB Memori 128 GB,redmi_A5.png
+category,name,price,desc,img,link
+Ekonomis,Vivo Y04S ,1.549.000,Ram 4/64 ,vivo_y04s.png,https://www.vivo.com/id/products/param/y04s
+Ekonomis,Samsung A07,1.399.000,Ram 4/64,a07.png,https://www.gsmarena.com/samsung_galaxy_a07-14066.php
+Ekonomis,Oppo A6X,2.099.000,Ram 4/64,oppo_a6xx.png,https://www.oppo.com/id/smartphones/series-a/a6x/specs/
+Ekonomis,Infinix Smart 10,1.499.000,Ram 4/64,infinix_smart10.png,https://erafone.com/produk/infinix-smart-10
+Produktivitas,Vivo V60 Lite,4.499.000,Ram 8/256,V60_lite.png,https://www.vivo.com/id/products/param/v60-lite
+Produktivitas,Xiaomi Note 15 Pro,4.899.000,Ram 8/256,Xiaomi_note_15_pro.png,https://www.mi.co.id/id/product/redmi-note-15-pro-5g/specs/
+Produktivitas,Samsung S25 5G,13.999.000,Ram 12/256,Samsun_S25.png,https://www.samsung.com/id/smartphones/galaxy-s25/
+Produktivitas,Realme C85 Pro,3.299.000,Ram 8/256,realmec85pro.png,https://www.realme.com/id/realme-c85-pro/specs
+Gaming,Poco F7,6.599.000,Ram 12/512,pocof7.png,https://www.mi.co.id/id/product/poco-f7/
+Gaming,Vivo V60 5G,6.999.000,Ram 8/256,vivov60.png,https://www.vivo.com/id/products/param/v60
+Gaming,Infinix GT 30 Pro 5G,4.799.000,Ram 12/512,Infinix-GT-30-Pro-12512GB-G1.png,https://infinixmobiles.in/products/gt-30-pro-5g?srsltid=AfmBOorw5An3wg2TN5WxFzjMEV01VSX89aO5YZSWzTK6bZKT4313oSUO
+Gaming,Samsung S25 Ultra,22.999.000,Ram 12/512,s25ultra.png,https://www.gsmarena.com/samsung_galaxy_s25_ultra-13322.php
