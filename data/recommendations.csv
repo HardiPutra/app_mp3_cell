@@ -1,13 +1,49 @@
 category,name,price,desc,img,link
-Ekonomis,Vivo Y04S ,1.549.000,Ram 4/64 ,vivo_y04s.png,https://www.vivo.com/id/products/param/y04s
-Ekonomis,Samsung A07,1.399.000,Ram 4/64,a07.png,https://www.gsmarena.com/samsung_galaxy_a07-14066.php
-Ekonomis,Oppo A6X,2.099.000,Ram 4/64,oppo_a6xx.png,https://www.oppo.com/id/smartphones/series-a/a6x/specs/
-Ekonomis,Infinix Smart 10,1.499.000,Ram 4/64,infinix_smart10.png,https://erafone.com/produk/infinix-smart-10
-Produktivitas,Vivo V60 Lite,4.499.000,Ram 8/256,V60_lite.png,https://www.vivo.com/id/products/param/v60-lite
-Produktivitas,Xiaomi Note 15 Pro,4.899.000,Ram 8/256,Xiaomi_note_15_pro.png,https://www.mi.co.id/id/product/redmi-note-15-pro-5g/specs/
-Produktivitas,Samsung S25 5G,13.999.000,Ram 12/256,Samsun_S25.png,https://www.samsung.com/id/smartphones/galaxy-s25/
-Produktivitas,Realme C85 Pro,3.299.000,Ram 8/256,realmec85pro.png,https://www.realme.com/id/realme-c85-pro/specs
-Gaming,Poco F7,6.599.000,Ram 12/512,pocof7.png,https://www.mi.co.id/id/product/poco-f7/
-Gaming,Vivo V60 5G,6.999.000,Ram 8/256,vivov60.png,https://www.vivo.com/id/products/param/v60
-Gaming,Infinix GT 30 Pro 5G,4.799.000,Ram 12/512,Infinix-GT-30-Pro-12512GB-G1.png,https://infinixmobiles.in/products/gt-30-pro-5g?srsltid=AfmBOorw5An3wg2TN5WxFzjMEV01VSX89aO5YZSWzTK6bZKT4313oSUO
-Gaming,Samsung S25 Ultra,22.999.000,Ram 12/512,s25ultra.png,https://www.gsmarena.com/samsung_galaxy_s25_ultra-13322.php
+Ekonomis,Vivo Y04S ,1.549.000 - 1.699.000,Ram 4GB | 64/128 GB ,vivo_y04s.png,https://www.vivo.com/id/products/param/y04s
+Ekonomis,Samsung A07,1.399.000 - 2.799.000,Ram 4/8 GB | Memori 64/128/256 ,a07.png,https://www.gsmarena.com/samsung_galaxy_a07-14066.php
+Ekonomis,Oppo A6X,2.099.000 - 3.499.000,Ram 4/6 GB | Memori 64/128 GB,oppo_a6xx.png,https://www.oppo.com/id/smartphones/series-a/a6x/specs/
+Ekonomis,Infinix Smart 10,1.499.000 - 1.599.000,Ram 4GB | Memori 64/128 GB,infinix_smart10.png,https://erafone.com/produk/infinix-smart-10
+Ekonomis,Vivo Y21D ,2.399.000 - 3.199.000,Ram 4/6/8 GB | Memori 128/256 GB,vivo_y21d.png,https://www.gsmarena.com/vivo_y21d-14508.php
+Ekonomis,Samsung A17,3.099.000 - 3.799.000,Ram 8GB | Memori 128/256 GB,Samsng_a17.png,https://www.gsmarena.com/samsung_galaxy_a17_5g-14041.php
+Ekonomis,Realme Note 70,1.499.000 - 1.599.000,Ram 4GB | Memori 64/128 GB,Realme_Note_70.png,https://www.realme.com/global/realme-note-70/specs
+Ekonomis,Realme C71,1.899.000 - 2.399.000,Ram 4/6/8 GB | Memori 128 GB,Realme_C71.png,https://www.gsmarena.com/realme_c71-13931.php
+Ekonomis,Realme C85,2.599.000 - 2.999.000,Ram 6/8 GB | Memori 128/256 GB,Realme_C85.png,https://www.gsmarena.com/realme_c85_5g-14274.php
+Ekonomis,Realme C85 PRO,2.999.000,Ram 8 GB | Memori 128/256 GB,Realme_C85_Pro.png,https://www.gsmarena.com/realme_c85_pro-14275.php
+Ekonomis,Infinix Hot 60i,2.299.000,Ram 8GB | Memori 256GB,Infinix_hot_60i.png,https://www.gsmarena.com/infinix_hot_60i_5g-14072.php
+Ekonomis,Infinix Hot 60 Pro,2.799.000 - 3.199.000,Ram 8GB | Memori 128/256 GB,HOT_60_PRO.png,https://www.gsmarena.com/infinix_hot_60_pro-14003.php
+Ekonomis,Redmi A5,1.599.000,Ram 4GB | Memori 128GB,Xiaomi_Mi_A5.png,https://www.gsmarena.com/xiaomi_redmi_a5_4g-13737.php
+Ekonomis,Redmi 15C,1.999.000 - 2.199.000,Ram 4/8 GB | Memori 128/256 GB,Redmi_15C.png,https://www.gsmarena.com/xiaomi_redmi_15c_5g-14039.php
+Ekonomis,Redmi 15,2.199.000 - 2.299.000,Ram 8GB | Memori 128/256 GB,Redmi_15.png,https://www.gsmarena.com/xiaomi_redmi_15_5g-14036.php
+Ekonomis,Redmi Note 15,3.099.000 - 3.299.000,Ram 8GB | Memori 128/256 GB,Redmi_note15.png,https://www.gsmarena.com/xiaomi_redmi_note_15_5g_(global)-14328.php
+Produktivitas,Vivo V60 Lite,4.499.000 - 5.999.000,Ram 8/12 GB | Memori 256/512 GB,V60_lite.png,https://www.vivo.com/id/products/param/v60-lite
+Produktivitas,Xiaomi Note 15 Pro,4.899.000 - 6.899.000,Ram 8/12 GB | Memori 256/512 GB,Xiaomi_note_15_pro.png,https://www.mi.co.id/id/product/redmi-note-15-pro-5g/specs/
+Produktivitas,Realme C85 Pro,2.999.000 - 3.299.000 ,Ram 8GB | Memori 128/256 GB,realmec85pro.png,https://www.realme.com/id/realme-c85-pro/specs
+Produktivitas,Infinix Note 50 Pro,3.299.000,Ram 8GB | Memori 256GB,infinix_note_50_pro.png,https://www.gsmarena.com/infinix_note_50_pro_4g-13701.php
+Produktivitas,Oppo A6,4.099.000 - 4.399.000,Ram 6GB | Memori 128/256GB,Oppo_A6.png,https://www.gsmarena.com/oppo_a6_5g-14412.php
+Produktivitas,Oppo Reno 15F,6.299.000 - 6.699.000,Ram 8/12 GB | Memori 256GB,oppo_Reno_15.png,https://www.gsmarena.com/oppo_reno15_f_5g-14396.php
+Produktivitas,Oppo Reno 15,8.299.000 - 8.999.000,Ram 8/12 GB | Memori 256GB,Redno_15.png,https://www.gsmarena.com/oppo_reno15_5g_(global)-14395.php
+Produktivitas,Realme 15,4.999.000 - 5.299.000,Ram 8/12 GB | Memori 256GB,Realme_15.png,https://www.gsmarena.com/realme_15_5g_(global)-14318.php
+Produktivitas,Realme 15T,3.699.000 - 3.999.000,Ram 8GB | Memori 128/256 GB,Realme_15T.png,https://www.gsmarena.com/realme_15t_5g-14105.php
+Produktivitas,Oppo A6 Pro,4.399.000 - 4.799.000,Ram 8GB | Memori 128/256 GB,Samsung_A6pro.png,https://www.gsmarena.com/oppo_a6_pro_5g-14171.php
+Produktivitas,Samsung A36,5.299.000,Ram 8GB | Memori 256 GB,Samsung_A36.png,https://www.gsmarena.com/samsung_galaxy_a36-13497.php
+Produktivitas,Samsung A56,6.299.000 - 6.799.000,Ram 8/12 GB | Memori 256GB,Samsung_A56.png,https://www.gsmarena.com/samsung_galaxy_a56-13603.php
+Produktivitas,Samsung S25 FE,9.999.000,Ram 8GB | Memori 256GB,Samsung_S25_FE.png,https://www.gsmarena.com/samsung_galaxy_s25_fe_5g-14042.php
+Produktivitas,Samsung Z FLIP 7,17.999.000 - 19.999.000,Ram 12GB | Memori 256/512 GB,Samsung_Zflip_7.png,https://www.gsmarena.com/samsung_galaxy_z_flip7-13712.php
+Produktivitas,Vivo V60,6.999.000 - 8.499.000,Ram 8/12 GB | Memori 256/512 GB,Vivo_V60.png,https://www.gsmarena.com/vivo_v60_5g-14021.php
+Produktivitas,Vivo Y400,3.499.000 - 3.899.000,Ram 8GB | Memori 128/256 GB,vivo_Y400.png,https://www.gsmarena.com/vivo_y400_5g-14043.php
+Produktivitas,Vivo X300,14.999.000 - 16.999.000,Ram 12/16 GB | Memori 256/512 GB,Vivo_X300.png,https://www.gsmarena.com/vivo_x300_5g-14224.php
+Produktivitas,Xaiomi 15T,8.199.000,Ram 12GB | Memori 512GB,Xiaomi_15T.png,https://www.gsmarena.com/xiaomi_15t_5g-14177.php
+Produktivitas,Samsung S25 Ultra,20.999.000 - 26.999.000,Ram 12GB | Memori 256/512/1TB GB,25_ultra.png,https://www.gsmarena.com/samsung_galaxy_s25_ultra-13322.php
+Gaming,Poco F7,6.599.000,Ram 12GB | Memori 512GB,pocof7.png,https://www.mi.co.id/id/product/poco-f7/
+Gaming,Vivo V60 5G,6.999.000 - 8.499.000,Ram 8/12 GB | Memori 256/512 GB,vivov60.png,https://www.vivo.com/id/products/param/v60
+Gaming,Infinix GT 30 Pro 5G,4.099.000 - 4.799.000,Ram 8/12 GB | 256/512 GB,Infinix-GT-30-Pro-12512GB-G1.png,https://infinixmobiles.in/products/gt-30-pro-5g?srsltid=AfmBOorw5An3wg2TN5WxFzjMEV01VSX89aO5YZSWzTK6bZKT4313oSUO
+Gaming,Samsung S25 Ultra,20.999.000 - 26.999.000  ,Ram 12GB | 256/1TB GB,s25ultra.png,https://www.gsmarena.com/samsung_galaxy_s25_ultra-13322.php
+Gaming,Infinix Note 60 Pro,5.699.000 - 6.199.000,Ram 8/12 GB | Memori 256 GB,Infinix_Note_60_Pro.png,https://www.gsmarena.com/res.php3?sSearch=infinix+note+60+pro
+Gaming,Oppo Reno 15 Pro Max,13.999.000,Ram 12GB | Memori 512GB,OPPO_Reno_15_PRO_MAX.png,https://www.gsmarena.com/oppo_reno15_pro_max_5g-14220.php
+Gaming,Poco X7,7.799.000,Ram 12GB | Memori 512GB,POCO_X7.png,https://www.gsmarena.com/xiaomi_poco_x7-13604.php
+Gaming,Poco X7 Pro,5.499.000,Ram 12GB | Memori 512GB,POCO_X7_Pro.png,https://www.gsmarena.com/xiaomi_poco_x7_pro-13582.php
+Gaming,Realme 15 Pro,6.999.000 - 7.499.000,Ram 12GB | Memori 256/512 GB,Realme_15_Pro.png,https://www.gsmarena.com/realme_15_pro_5g-14017.php
+Gaming,Samsung Z Fold 7,28.499.000 - 31.499.000,Ram 12GB | Memori 256/512 GB,Samsung_FOLD_7.png,https://www.gsmarena.com/samsung_galaxy_z_fold7-13826.php
+Gaming,Tecno Pova 7,3.299.000 - 3.499.000,Ram 8GB | Memori 128/256 GB,Tekno_Pova_7.png,https://www.gsmarena.com/tecno_pova_7_5g-13991.php
+Gaming,Tecno Pova Curve,3.399.000,Ram 8GB | Memori 256GB,Tekno_Pova_Curve.png,https://www.gsmarena.com/tecno_pova_curve_5g-13915.php
+Produktivitas,Tecno Camon 40 Pro,4.199.000,Ram 8GB | Memori 256GB,Tecno_Camon_40.png,https://www.gsmarena.com/tecno_camon_40_pro_5g-13695.php
